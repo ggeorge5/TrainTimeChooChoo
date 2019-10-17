@@ -11,4 +11,25 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
-  
+  var trainDatabase = firebase.database();
+
+  //adding train button to collect then store info
+  $(document).on("click", '#addTrain', function(event) {
+      event.preventDefault();
+      var trainName = $("#train-name-input").val().trim();
+      var destination = $("#destination-input").val().trim();
+      var firstTrain = moment($("#time-input").val().trim(), "HH:mm").format("military time");
+      var frequency = $("#frequency-input").val().trim();
+
+      console.log(firstTrain);
+
+      trainInputs = {
+          trainName: trainName,
+          destination: destination,
+          firstTrain: firstTrain,
+          frequency: frequency
+      }
+
+      trainDatabase.ref().push(trainInputs)
+  });
+
