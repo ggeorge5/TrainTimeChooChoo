@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <title>Train Tracker</title>
 
-  <!-- Bootstrap -->
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -18,25 +18,18 @@
 
   <!-- Moment.js Reference -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-
-  <style>
-    #employee-table th,
-    td {
-      display: inline-block;
-      width: 20%;
-    }
-  </style>
 </head>
 
-<body>
+<body style="background-color:black">
 
   <!-- Employee Tracker -->
-  <div class="container">
+  <div class="container" style="background-color: black">
 
     <!-- Jumbotron -->
-    <div class="jumbotron" style="background-color: black; color: white">
-      <h1 class="text-center">Grant Central Train Listings</h1>
-      <h3 class="text-center">Dont be late! The train wont wait!</h3>
+    <div class="header"> 
+      <img src="./assets/images/train.jpg" class="card-img" alt="Phot of a train">
+      <h1 class="text-center text-white">Grand Central Train Listings</h1>
+      <h3 class="text-center text-white">Dont be late! The train wont wait!</h3>
     </div>
 
     <div class="row">
@@ -45,16 +38,16 @@
 
         <!-- Current Employees-->
         <div class="card mb-4">
-          <div class="card-header">Train Boarding Schedule</div>
+          <div class="card-header text-center" style="font-size: 25px">Train Boarding Schedule</div>
           <div class="card-body">
-            <table class="table table-sm table-hover" id='train-table'>
+            <table class="table table-sm table-hover" id="trainTable">
               <thead>
                 <tr>
                   <th scope="col">Train Name</th>
                   <th scope="col">Destination</th>
                   <th scope="col">Frequency (min)</th>
                   <th scope="col">Next Arrival</th>
-                  <th scope="col">Miles Away</th>
+                  <th scope="col">Minutes Away</th>
                 </tr>
               </thead>
               <tbody>
@@ -69,28 +62,28 @@
       <div class="col-md-12">
         <!-- Add Employee  -->
         <div class="card mb-4">
-          <div class="card-header">Additonal Train</div>
+          <div class="card-header text-center" style="font-size: 25px">Additonal Train</div>
           <div class="card-body">
 
             <!-- Entry Form -->
             <form>
               <div class="form-group">
-                <label for="train-name-input">Train Name</label>
-                <input class="form-control" id="train-name-input" placeholder="Train Name" type="text">
+                <label for="train-name-input">Train Name: </label>
+                <input class="form-control" id="trainNameInput" placeholder="Train Name" type="text" />
               </div>
               <div class="form-group">
-                <label for="destination-input">Destination</label>
-                <input class="form-control" id="destination-input" placeholder="Destination" type="text">
-              </div>
-              <div class="form-group row">
-                <label for="time-input">First Train (HH:mm - military time):</label>
-                <input class="form-control" id="time-input" type="text" />
+                <label for="destinationInput">Destination: </label>
+                <input class="form-control" id="destinationInput" placeholder="Destination" type="text" />
               </div>
               <div class="form-group">
-                <label for="frequency-input">Frequency</label>
-                <input class="form-control" id="frequency-input" placeholder="Frequency" type="text">
+                <label for="time-input">First Train (HH:mm - military time): </label>
+                <input class="form-control" id="timeInput" type="text" />
               </div>
-              <button class="btn btn-primary float-right" id="addTrain">Submit</button>
+              <div class="form-group">
+                <label for="frequencyInput">Frequency(min): </label>
+                <input class="form-control" id="frequencyInput" placeholder="Frequency" type="text" />
+              </div>
+              <button class="btn btn-outline-dark float right" id="addTrain" type="submit">Submit</button>
             </form>
 
           </div>

@@ -1,59 +1,54 @@
   // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey: "AIzaSyB7XtWA6PQXqUuaBE6zFiRt75nBXAPy7Zw",
-    authDomain: "traintime-ea8e5.firebaseapp.com",
-    databaseURL: "https://traintime-ea8e5.firebaseio.com",
-    projectId: "traintime-ea8e5",
-    storageBucket: "traintime-ea8e5.appspot.com",
-    messagingSenderId: "491082082642",
-    appId: "1:491082082642:web:930f45efc7f9bee9af728b"
+    apiKey: "AIzaSyB1SvKhQvzWdHi9Xh9bwnGtkFtaYYfo8_4",
+    authDomain: "choo-choo-7011e.firebaseapp.com",
+    databaseURL: "https://choo-choo-7011e.firebaseio.com",
+    projectId: "choo-choo-7011e",
+    storageBucket: "choo-choo-7011e.appspot.com",
+    messagingSenderId: "455317948618",
+    appId: "1:455317948618:web:78a55d70142ad982358c33"
   };
   // Initialize Firebase
-  firebase.initializeApp(config);
+  firebase.initializeApp(firebaseConfig);
 
-  var trainDatabase = firebase.database();
+var trainDatabase = firebase.database();
 
-  //adding train button to collect then store info
-  $("addTrain").on("click", function(event) {
-      event.preventDefault();
-      var trainName = $("#train-name-input").val().trim();
-      var trainDestination = $("#destination-input").val().trim();
-      var firstTrain = moment($("#time-input").val().trim(), "HH:mm").format("military time");
-      var frequency = $("#frequency-input").val().trim();
+// Add train button, collect and store info
+$("#addTrain").on("click", function(event) {
+  event.preventDefault();
+  var trainName = $("#trainNameInput").val().trim();
+  var destination = $("#destinationInput").val().trim();
+  var firstTrain = moment($("#timeInput").val().trim(),"HH:mm").subtract(10, "years").format("X");
+  var frequency = $("#frequencyInput").val().trim();
 
+  console.log(firstTrain);
 
-      var trainInputs = {
-          Name: trainName,
-          destination: trainDestination,
-          start: firstTrain,
-          time: frequency
-      };
+  trainInputs = {
+  trainName: trainName,
+  destination: destination,
+  firstTrain: firstTrain,
+  frequency: frequency
+}
+// Send object to firebase 
+  trainDatabase.ref().push(trainInputs)
+});
 
-      trainDatabase.ref().push(trainInputs)
+// Moment.js math
+trainDatabase.ref().on("child_added", function(snapshot) {
+  var name = snapshot.val().trainName;
+  var destination = snapshot.val().destination;
+  var frequency = snapshot.val().frequency;
+  var firstTrain = snapshot.val().firstTrain;
+  
+  var remainder = moment().diff(moment.unix(firstTrain), "minutes") % frequency
+  var minutes = frequency - remainder;
+  var arrival = moment().add(minutes, "m").format("hh:mm A");
 
-      alert("Train has been scheduled");
-
-      $("#train-name-input").val("");
-      $("#destination-input").val("");
-      $("#time-input").val("");
-      $("#frequency-input").val("");
-  });
-
-  database.ref().on("child_added", function(childSnapshot) {
-    console.log(childSnapshot.val());
-
-    var trnName = childSnapshot.val().name;
-    var trnDestination = childSnapshot.val().role;
-    var trnTime = childSnapshot.val().start;
-    var trnFrequency = childSnapshot.val().rate;
-
-    console.log(trnName);
-    console.log(trnDestination);
-    console.log(trnTime);
-    console.log(trnFrequency);
-
-    var trainStartPretty = moment.unix(trnTime).format("HH:mm");
-
-    var trnMinutes = moment().diff(moment(trnTime).format)
-  })
+  console.log(remainder);
+  console.log(minutes);
+  console.log(arrival);
+  
+// Append to table from firebase 
+  $("#trainTable > tBody").append("<tr><td>" + name +"</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + arrival + "</td><td>" + minutes + "</td></tr>");
+});
 
